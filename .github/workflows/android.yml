@@ -26,13 +26,22 @@ jobs:
         with:
           python-version: '3.10'
 
+      
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          accept-android-sdk-licenses: false
 
-      - name: Install Android SDK packages
+      - name: Accept Android SDK licenses and install packages
+        shell: bash
         run: |
-          sdkmanager --install "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+          set -e
           yes | sdkmanager --licenses
+          sdkmanager --install \
+            "platform-tools" \
+            "platforms;android-35" \
+            "build-tools;35.0.0"
+
 
       - name: Install Linux dependencies
         run: |
